@@ -8,7 +8,8 @@
         <div @click="dontAsk = !dontAsk">I do not want to answer</div>
       </div>
     </div>
-    <button :disabled="!dontAsk && !text" :class="{ 'disable': !dontAsk && !text }" type="submit">{{ finallyPage ? 'Submit' : 'Next' }}</button>
+    <div v-if="loading">Loading...</div>
+    <button v-else :disabled="!dontAsk && !text" :class="{ 'disable': !dontAsk && !text }" type="submit">{{ finallyPage ? 'Submit' : 'Next' }}</button>
   </form>
 </template>
 
@@ -16,7 +17,8 @@
 export default {
   props: {
     title: String,
-    finallyPage: Boolean
+    finallyPage: Boolean,
+    loading: Boolean
   },
   data () {
     return {

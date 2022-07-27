@@ -27,6 +27,7 @@
               v-if="list[currentPage].type === 'text'"
               :title="list[currentPage].title"
               :finallyPage="list.length === currentPage + 1"
+              :loading="loadingSave"
             />
 
             <text-checkBox-qustion
@@ -53,7 +54,8 @@ export default {
       currentPage: 0,
       loading: true,
       list: null,
-      data: []
+      data: [],
+      loadingSave: false
     }
   },
   methods: {
@@ -71,8 +73,11 @@ export default {
       }
     },
     sendData () {
+      this.loadingSave = true
       api.saveData(this.data).then(() => {
         this.$emit('close')
+      }).finally(() => {
+        this.loadingSave = false
       })
     }
   },
