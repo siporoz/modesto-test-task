@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header-component />
+    <popup-component v-if="showPopup" @close="hide" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderComponent from './components/HeaderComponent.vue'
+import PopupComponent from './components/PopupComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HeaderComponent,
+    PopupComponent
+  },
+  data () {
+    return {
+      showPopup: false
+    }
+  },
+  methods: {
+    hide () {
+      this.showPopup = false
+      this.$cookies.set('popup', 1)
+    }
+  },
+  created () {
+    if (!this.$cookies.get('popup')) {
+      this.showPopup = true
+    }
   }
 }
 </script>
 
 <style>
+body { margin: 0 !important; }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
